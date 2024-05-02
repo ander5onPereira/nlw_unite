@@ -6,14 +6,14 @@ export function Header() {
   const path = location.pathname;
   return (
     <div className="flex items-center gap-5 py-2">
-      <a href="/">
+      <a href="/nlw_unite">
         <img src={nlwUniteIcon} alt="logo-unite" />
       </a>
       <nav className="flex items-center gap-5">
-        <NavLink href="/events" isSelect={path === "/events"}>
+        <NavLink href="/nlw_unite/events" isSelect={path === "/nlw_unite/events"}>
           Eventos
         </NavLink>
-        <NavLink href="/participantes" isSelect={path === "/participantes"}>
+        <NavLink href="/nlw_unite/participantes" isSelect={path === "/nlw_unite/participantes"}>
           Paticipantes
         </NavLink>
       </nav>

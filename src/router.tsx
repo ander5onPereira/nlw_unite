@@ -7,20 +7,20 @@ import { ErrorPage } from './pages/errorPage'
 
 const router=createBrowserRouter([
   {
-    path:'/',
+    path:'/nlw_unite',
     element:<App/>,
     errorElement:<ErrorPage/>,
     children:[
       {
-        path:'/',
+        path:'/nlw_unite',
         element:<Home/>
       },
       {
-        path:'/participantes',
+        path:'/nlw_unite/participantes',
         element:<Attendee/>
       },
       {
-        path:'/events',
+        path:'/nlw_unite/events',
         element:<Events/>
       }
     ]
