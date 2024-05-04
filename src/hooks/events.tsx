@@ -3,6 +3,7 @@ import { readFile } from "../file/ler";
 import { writeFile } from "../file/escrever";
 import DialogContext from "../context/dialog";
 import { EventI, ListEventI, defaultEvent } from "../interfaces/events";
+import { v4 as uuidv4 } from "uuid";
 
 const LOCAL_STORAGE="events"
 export function useEvents() {
@@ -70,8 +71,9 @@ export function useEvents() {
 
   }
   function handlerSave(idDialog:string) {
-    const newListEvent = [...(listEvents?.events || []), currentEvent];
+    const newListEvent = [...(listEvents?.events || []), {...currentEvent,id:uuidv4()}];
     writeFile(LOCAL_STORAGE, newListEvent);
+    setCurrentEvent(defaultEvent)
     setListEvents({
       events: newListEvent || [],
       total: newListEvent?.length || 0,

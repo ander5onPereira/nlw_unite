@@ -6,8 +6,11 @@ import DialogContext from "../context/dialog";
 import { writeFile } from "../file/escrever";
 import { readFile } from "../file/ler";
 import { AttendeeI } from "../interfaces/attendees";
+
 dayjs.extend(relativeTime);
 dayjs.locale("pt-br");
+
+const LOCAL_STORAGE = "attendees";
 export function useAttendees() {
   const [search, setSearch] = useState<string>(() => {
     const url = new URL(window.location.toString());
@@ -52,10 +55,10 @@ export function useAttendees() {
     }));
   }
   function filterByName() {
-    return listAttendees?.attendees.filter(attendee =>
+    return listAttendees?.attendees.filter((attendee) =>
       attendee.name.toLowerCase().includes(search.toLowerCase())
     );
-  }  
+  }
   function setCurrentSearch(search: string) {
     const url = new URL(window.location.toString());
     url.searchParams.set("search", String(search));
@@ -96,22 +99,22 @@ export function useAttendees() {
       }
       return attend;
     });
-    writeFile("attendees", newListAttendees);
+    writeFile(LOCAL_STORAGE, newListAttendees);
     removeDialog(dialogName);
   }
   function removeAttendees(id: string, dialogName: string) {
     const newListAttendees = listAttendees?.attendees.filter(
       (event: any) => event.id !== id
     );
-    writeFile("attendees", newListAttendees);
+    writeFile(LOCAL_STORAGE, newListAttendees);
     removeDialog(dialogName);
   }
   function handlerSave(idDialog: string) {
     const newListAttendees = [
       ...(listAttendees?.attendees || []),
-      currentAttendees,
+      { ...currentAttendees, id: uuidv4() },
     ];
-    writeFile("attendees", newListAttendees);
+    writeFile(LOCAL_STORAGE, newListAttendees);
     setListAttendees({
       attendees: newListAttendees || [],
       total: newListAttendees?.length || 0,
@@ -120,7 +123,7 @@ export function useAttendees() {
   }
 
   function handlerLoading() {
-    const attendees = readFile("attendees");
+    const attendees = readFile(LOCAL_STORAGE);
     setListAttendees({
       attendees: attendees || [],
       total: attendees?.length || 0,
@@ -131,13 +134,13 @@ export function useAttendees() {
   useEffect(() => {
     handlerLoading();
   }, []);
-  useEffect(()=>{
-    const filterList=filterByName()
+  useEffect(() => {
+    const filterList = filterByName();
     setListAttendeesFilter({
       attendees: filterList || [],
       total: filterList?.length || 0,
     });
-  },[search])
+  }, [search]);
   return {
     onSearchInputChanged,
     goToNextPage,
@@ -157,6 +160,6 @@ export function useAttendees() {
     removeAttendees,
     handlerCheckIn,
     closeDialog,
-    listAttendeesFilter
+    listAttendeesFilter,
   };
 }
