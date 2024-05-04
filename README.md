@@ -41,7 +41,7 @@ Aplicação foi desenvolvida na NLW Unite da Rocketseat, aplicação para realiz
 
 ## 📄 Ambiente de produção
 
-Github Pages para acessar [click aqui](https://ander5onpereira.github.io/nlw-unite/)
+Github Pages para acessar [click aqui](https://ander5onpereira.github.io/nlw_unite/)
 
 ## 📄 Licença
 
